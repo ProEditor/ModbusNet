@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="ModbusNetTest\obj\Debug\net6.0\.NETCoreApp,Version=v6.0.AssemblyAttributes.cs" />
+    <Compile Remove="ModbusNetTest\UnitTest1.cs" />
+    <Compile Remove="ModbusNetTest\Usings.cs" />
+    <Compile Remove="ModbusNetTest\obj\Debug\net6.0\ModbusNetTest.GlobalUsings.g.cs" />
+    <Compile Remove="ModbusNetTest\obj\Debug\net6.0\ModbusNetTest.AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="ModbusNetTest\bin\Debug\net6.0\CoverletSourceRootsMapping" />
+    <None Remove="ModbusNetTest\obj\Debug\net6.0\ModbusNetTest.csproj.AssemblyReference.cache" />
+    <None Remove="ModbusNetTest\obj\ModbusNetTest.csproj.nuget.g.props" />
+    <None Remove="ModbusNetTest\obj\ModbusNetTest.csproj.nuget.g.targets" />
+    <None Remove="ModbusNetTest\obj\project.assets.json" />
+    <None Remove="ModbusNetTest\obj\project.nuget.cache" />
+    <None Remove="ModbusNetTest\obj\ModbusNetTest.csproj.nuget.dgspec.json" />
+    <None Remove="ModbusNetTest\obj\Debug\net6.0\ModbusNetTest.assets.cache" />
+    <None Remove="ModbusNetTest\obj\Debug\net6.0\ModbusNetTest.GeneratedMSBuildEditorConfig.editorconfig" />
+    <None Remove="ModbusNetTest\obj\Debug\net6.0\ModbusNetTest.AssemblyInfoInputs.cache" />
+  </ItemGroup>
+</Project>

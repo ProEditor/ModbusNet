@@ -1,0 +1,3 @@
+is_global = true
+build_property.RootNamespace = ModbusNet
+build_property.ProjectDir = /Users/liuganting/dev/liuganting/ModbusNet/ModbusNet/

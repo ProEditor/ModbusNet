@@ -1,0 +1,51 @@
+﻿<Properties StartupConfiguration="{9EFFFF68-5377-41B3-9088-C72993980627}|Default">
+  <MonoDevelop.Ide.ItemProperties.ModbusNetTest PreferredExecutionTarget="MonoDevelop.Default" />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.Workbench ActiveDocument="ModbusNet/TcpModbusMaster.cs">
+    <Files>
+      <File FileName="ModbusNet/TcpModbusRequestBuilder.cs" Line="496" Column="64" />
+      <File FileName="ModbusNet/TcpModbusMaster.cs" Line="99" Column="10" />
+      <File FileName="ModbusNet/TcpModbusResponse.cs" Line="23" Column="42" />
+      <File FileName="ModbusNet/IModbus.cs" Line="50" Column="55" />
+      <File FileName="ModbusNet/TcpMasterOption.cs" Line="41" Column="24" />
+      <File FileName="ModbusNetDemo/Program.cs" Line="26" Column="42" />
+      <File FileName="ModbusNet/NumericalTypeEnum.cs" Line="3" Column="2" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="ModbusNet" expanded="True">
+            <Node name="ModbusNet" expanded="True" />
+            <Node name="ModbusNetDemo" expanded="True" />
+            <Node name="ModbusNetTest" expanded="True" />
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State>
+          <Value>new byte[]{0,6};</Value>
+          <Value>BitConverter.GetBytes(6)</Value>
+          <Value>0x80 + FunctionCode</Value>
+          <Value> remainderBuffer[1]</Value>
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.UnitTesting.TestPad">
+        <State name="__root__">
+          <Node name="ModbusNet" expanded="True" selected="True" />
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.ModbusNetDemo PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/Users/liuganting/dev/liuganting/ModbusNet/ModbusNetTest/UnitTest1.cs" relfile="ModbusNetTest/UnitTest1.cs" line="10" column="1" />
+      <Breakpoint file="/Users/liuganting/dev/liuganting/ModbusNet/ModbusNet/TcpModbusRequestBuilder.cs" relfile="ModbusNet/TcpModbusRequestBuilder.cs" line="477" column="1" />
+      <Breakpoint file="/Users/liuganting/dev/liuganting/ModbusNet/ModbusNet/TcpModbusRequestBuilder.cs" relfile="ModbusNet/TcpModbusRequestBuilder.cs" line="361" column="1" />
+      <Breakpoint file="/Users/liuganting/dev/liuganting/ModbusNet/ModbusNet/TcpModbusRequestBuilder.cs" relfile="ModbusNet/TcpModbusRequestBuilder.cs" line="311" column="1" />
+      <Breakpoint file="/Users/liuganting/dev/liuganting/ModbusNet/ModbusNet/TcpModbusRequestBuilder.cs" relfile="ModbusNet/TcpModbusRequestBuilder.cs" line="368" column="41" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+</Properties>

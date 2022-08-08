@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 25.0.1700.7
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModbusNetTest", "ModbusNetTest\ModbusNetTest.csproj", "{6EB70EA8-BE19-4F6C-87BB-5FE9C5D2340A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModbusNet", "ModbusNet\ModbusNet.csproj", "{9FC2E2F4-EAD5-4BB6-97AA-FE715B2D3EA4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModbusNetDemo", "ModbusNetDemo\ModbusNetDemo.csproj", "{9EFFFF68-5377-41B3-9088-C72993980627}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6EB70EA8-BE19-4F6C-87BB-5FE9C5D2340A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EB70EA8-BE19-4F6C-87BB-5FE9C5D2340A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EB70EA8-BE19-4F6C-87BB-5FE9C5D2340A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EB70EA8-BE19-4F6C-87BB-5FE9C5D2340A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FC2E2F4-EAD5-4BB6-97AA-FE715B2D3EA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FC2E2F4-EAD5-4BB6-97AA-FE715B2D3EA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FC2E2F4-EAD5-4BB6-97AA-FE715B2D3EA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FC2E2F4-EAD5-4BB6-97AA-FE715B2D3EA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9EFFFF68-5377-41B3-9088-C72993980627}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9EFFFF68-5377-41B3-9088-C72993980627}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9EFFFF68-5377-41B3-9088-C72993980627}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9EFFFF68-5377-41B3-9088-C72993980627}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2A4E3097-9D49-405E-9C12-00DF313DDC5F}
+	EndGlobalSection
+EndGlobal
