@@ -40,7 +40,7 @@ namespace ModbusNetDemo
             // TcpModbusResponse<List<bool>> response = new TcpModbusResponse<List<bool>>();
 
 
-            ReadCoilsRequestMessage message = new ReadCoilsRequestMessage();
+            ReadCoilsMessage message = new ReadCoilsMessage();
             var spanss = message.ToBinary();
             
             Console.WriteLine("dd");

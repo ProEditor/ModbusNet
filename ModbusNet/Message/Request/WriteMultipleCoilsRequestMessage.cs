@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 
 namespace ModbusNet.Message.Request
 {
-    public class WriteMultipleCoilsRequestMessage : BaseMessage
+    public class WriteMultipleCoilsMessage : BaseMessage
     {
         public override byte FunctionCode => FunctionCodeDefinition.WRITE_MULTIPLE_COILS;
 
