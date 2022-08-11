@@ -34,7 +34,7 @@ namespace ModbusNet
         /// <summary>
         /// 读取输入寄存器
         /// </summary>
-        public const byte READ_INPUT_REGISTER = 0x04;
+        public const byte READ_INPUT_REGISTERS = 0x04;
 
 
         /// <summary>

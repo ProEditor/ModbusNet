@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "cW9nKQE0ulPzBvaHuKJq1TcxCZ8ZY98mLsqwaFYFVNa5yhsZ6XNCGRi7qWC2n8ry6CzaVElFOBbpeqQewdCpWQ==",
+  "dgSpecHash": "RQbYxvFuo01Ifv38reMv+nsIwiPJ1CTj7mcpU/efz4qXwswINNbIAeonmkQL9eEivEgtkX1JB/HLj8pvhwuLWg==",
   "success": true,
   "projectFilePath": "/Users/liuganting/dev/liuganting/ModbusNet/ModbusNetTest/ModbusNetTest.csproj",
   "expectedPackageFiles": [

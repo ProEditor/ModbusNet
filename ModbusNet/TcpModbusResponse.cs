@@ -1,7 +1,11 @@
 ﻿using System;
 namespace ModbusNet
 {
-    public class TcpModbusResponse
+
+    public delegate void TcpModbusCallback(IAsyncResult ar);
+
+
+    public class TcpModbusResponse<T>
     {
         public TcpModbusResponse()
         {
@@ -14,9 +18,6 @@ namespace ModbusNet
         public ushort TransactionId;
 
 
-
-
-
         /// <summary>
         /// 向从站发出指定是否成功
         /// </summary>
@@ -25,7 +26,7 @@ namespace ModbusNet
 
         public ushort ExceptionCode { get; set; }
 
-        public object Result { get; set; }
+        public T Result { get; set; }
     }
 }
 

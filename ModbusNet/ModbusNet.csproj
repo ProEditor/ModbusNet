@@ -28,5 +28,11 @@
     <None Remove="ModbusNetTest\obj\Debug\net6.0\ModbusNetTest.assets.cache" />
     <None Remove="ModbusNetTest\obj\Debug\net6.0\ModbusNetTest.GeneratedMSBuildEditorConfig.editorconfig" />
     <None Remove="ModbusNetTest\obj\Debug\net6.0\ModbusNetTest.AssemblyInfoInputs.cache" />
+    <None Remove="Message\" />
+    <None Remove="Message\Request\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Message\" />
+    <Folder Include="Message\Request\" />
   </ItemGroup>
 </Project>
