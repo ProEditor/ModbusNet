@@ -157,84 +157,84 @@ namespace ModbusNet
             return this;
         }
 
-        public BaseMessage Build()
+        public BaseRequestMessage Build()
         {
             switch (FunctionCode)
             {
                 case FunctionCodeDefinition.READ_COILS:
-                    ReadCoilsMessage readCoils = new ReadCoilsMessage();
-                    readCoils.TransactionId = TransactionId;
-                    readCoils.UnitId = UnitId;
-                    readCoils.Address = Address;
-                    readCoils.Quantity = Quantity;
-                    return readCoils;
+                    ReadCoilsRequestMessage readCoilsRequest = new ReadCoilsRequestMessage();
+                    readCoilsRequest.TransactionId = TransactionId;
+                    readCoilsRequest.UnitId = UnitId;
+                    readCoilsRequest.Address = Address;
+                    readCoilsRequest.Quantity = Quantity;
+                    return readCoilsRequest;
 
                 case FunctionCodeDefinition.READ_DISCRETE_INPUTS:
-                    ReadDiscreteInputsMessage readDiscreteInputs = new ReadDiscreteInputsMessage();
-                    readDiscreteInputs.TransactionId = TransactionId;
-                    readDiscreteInputs.UnitId = UnitId;
-                    readDiscreteInputs.Address = Address;
-                    readDiscreteInputs.Quantity = Quantity;
-                    return readDiscreteInputs;
+                    ReadDiscreteInputsRequestMessage readDiscreteInputsRequest = new ReadDiscreteInputsRequestMessage();
+                    readDiscreteInputsRequest.TransactionId = TransactionId;
+                    readDiscreteInputsRequest.UnitId = UnitId;
+                    readDiscreteInputsRequest.Address = Address;
+                    readDiscreteInputsRequest.Quantity = Quantity;
+                    return readDiscreteInputsRequest;
 
                 case FunctionCodeDefinition.READ_HOLDING_REGISTERS:
-                    ReadHoldingRegistersMessage readHoldingRegisters = new ReadHoldingRegistersMessage();
-                    readHoldingRegisters.TransactionId = TransactionId;
-                    readHoldingRegisters.UnitId = UnitId;
-                    readHoldingRegisters.Address = Address;
-                    readHoldingRegisters.Quantity = Quantity;
-                    return readHoldingRegisters;
+                    ReadHoldingRegistersRequestMessage readHoldingRegistersRequest = new ReadHoldingRegistersRequestMessage();
+                    readHoldingRegistersRequest.TransactionId = TransactionId;
+                    readHoldingRegistersRequest.UnitId = UnitId;
+                    readHoldingRegistersRequest.Address = Address;
+                    readHoldingRegistersRequest.Quantity = Quantity;
+                    return readHoldingRegistersRequest;
 
                 case FunctionCodeDefinition.READ_INPUT_REGISTERS:
-                    ReadInputRegistersMessage readInputRegisters = new ReadInputRegistersMessage();
-                    readInputRegisters.TransactionId = TransactionId;
-                    readInputRegisters.UnitId = UnitId;
-                    readInputRegisters.Address = Address;
-                    readInputRegisters.Quantity = Quantity;
-                    return readInputRegisters;
+                    ReadInputRegistersRequestMessage readInputRegistersRequest = new ReadInputRegistersRequestMessage();
+                    readInputRegistersRequest.TransactionId = TransactionId;
+                    readInputRegistersRequest.UnitId = UnitId;
+                    readInputRegistersRequest.Address = Address;
+                    readInputRegistersRequest.Quantity = Quantity;
+                    return readInputRegistersRequest;
 
                 case FunctionCodeDefinition.WRITE_SINGLE_COIL:
-                    WriteSingleCoilMessage writeSingleCoil = new WriteSingleCoilMessage();
-                    writeSingleCoil.TransactionId = TransactionId;
-                    writeSingleCoil.UnitId = UnitId;
-                    writeSingleCoil.Address = Address;
-                    writeSingleCoil.CoilStatus = (bool)WriteData;
-                    return writeSingleCoil;
+                    WriteSingleCoilRequestMessage writeSingleCoilRequest = new WriteSingleCoilRequestMessage();
+                    writeSingleCoilRequest.TransactionId = TransactionId;
+                    writeSingleCoilRequest.UnitId = UnitId;
+                    writeSingleCoilRequest.Address = Address;
+                    writeSingleCoilRequest.CoilStatus = (bool)WriteData;
+                    return writeSingleCoilRequest;
 
                 case FunctionCodeDefinition.WRITE_SINGLE_REGISTER:
-                    WriteSingleRegisterMessage writeSingleRegister = new WriteSingleRegisterMessage();
-                    writeSingleRegister.TransactionId = TransactionId;
-                    writeSingleRegister.UnitId = UnitId;
-                    writeSingleRegister.Address = Address;
-                    writeSingleRegister.Value = (short)WriteData;
-                    return writeSingleRegister;
+                    WriteSingleRegisterRequestMessage writeSingleRegisterRequest = new WriteSingleRegisterRequestMessage();
+                    writeSingleRegisterRequest.TransactionId = TransactionId;
+                    writeSingleRegisterRequest.UnitId = UnitId;
+                    writeSingleRegisterRequest.Address = Address;
+                    writeSingleRegisterRequest.Value = (short)WriteData;
+                    return writeSingleRegisterRequest;
 
                 case FunctionCodeDefinition.WRITE_MULTIPLE_COILS:
-                    WriteMultipleCoilsMessage writeMultipleCoils = new WriteMultipleCoilsMessage();
-                    writeMultipleCoils.TransactionId = TransactionId;
-                    writeMultipleCoils.UnitId = UnitId;
-                    writeMultipleCoils.Address = Address;
-                    writeMultipleCoils.Values = (List<bool>)WriteData;
-                    return writeMultipleCoils;
+                    WriteMultipleCoilsRequestMessage writeMultipleCoilsRequest = new WriteMultipleCoilsRequestMessage();
+                    writeMultipleCoilsRequest.TransactionId = TransactionId;
+                    writeMultipleCoilsRequest.UnitId = UnitId;
+                    writeMultipleCoilsRequest.Address = Address;
+                    writeMultipleCoilsRequest.Values = (List<bool>)WriteData;
+                    return writeMultipleCoilsRequest;
 
                 case FunctionCodeDefinition.WRITE_MULTIPLE_REGISTERS:
-                    WriteMultipleRegistersMessage writeMultipleRegisters = new WriteMultipleRegistersMessage();
-                    writeMultipleRegisters.TransactionId = TransactionId;
-                    writeMultipleRegisters.UnitId = UnitId;
-                    writeMultipleRegisters.Address = Address;
-                    writeMultipleRegisters.Values = (List<object>)WriteData;
-                    return writeMultipleRegisters;
+                    WriteMultipleRegistersRequestMessage writeMultipleRegistersRequest = new WriteMultipleRegistersRequestMessage();
+                    writeMultipleRegistersRequest.TransactionId = TransactionId;
+                    writeMultipleRegistersRequest.UnitId = UnitId;
+                    writeMultipleRegistersRequest.Address = Address;
+                    writeMultipleRegistersRequest.Values = (List<object>)WriteData;
+                    return writeMultipleRegistersRequest;
 
                 case FunctionCodeDefinition.READ_WRITE_MULTIPLE_REGISTERS:
-                    ReadWriteMultipleRegistersMessage readWriteMultipleRegisters = new ReadWriteMultipleRegistersMessage();
-                    readWriteMultipleRegisters.TransactionId = TransactionId;
-                    readWriteMultipleRegisters.UnitId = UnitId;
-                    readWriteMultipleRegisters.ReadStartingAddress = ReadStartingAddress;
-                    readWriteMultipleRegisters.ReadQuantity = ReadQuantity;
-                    readWriteMultipleRegisters.WriteStartingAddress = WriteStartingAddress;
-                    readWriteMultipleRegisters.WriteQuantity = WriteQuantity;
-                    readWriteMultipleRegisters.Values = (List<object>)WriteData;
-                    return readWriteMultipleRegisters;
+                    ReadWriteMultipleRegistersRequestMessage readWriteMultipleRegistersRequest = new ReadWriteMultipleRegistersRequestMessage();
+                    readWriteMultipleRegistersRequest.TransactionId = TransactionId;
+                    readWriteMultipleRegistersRequest.UnitId = UnitId;
+                    readWriteMultipleRegistersRequest.ReadStartingAddress = ReadStartingAddress;
+                    readWriteMultipleRegistersRequest.ReadQuantity = ReadQuantity;
+                    readWriteMultipleRegistersRequest.WriteStartingAddress = WriteStartingAddress;
+                    readWriteMultipleRegistersRequest.WriteQuantity = WriteQuantity;
+                    readWriteMultipleRegistersRequest.Values = (List<object>)WriteData;
+                    return readWriteMultipleRegistersRequest;
                 default:
                     throw new ArgumentException("invalid function code");
 

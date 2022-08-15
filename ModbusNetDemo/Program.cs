@@ -10,6 +10,11 @@ namespace ModbusNetDemo
     {
         static void Main(string[] args)
         {
+
+            string s = ExceptionCodeDefinition.Acknowledge.ToString();
+            ExceptionCodeDefinition ddd = (ExceptionCodeDefinition)0x99;
+            string s1 = ddd.ToString();
+
             TcpModbusMaster tcpModbusMaster = new TcpModbusMaster("10.211.55.3", 502);
             tcpModbusMaster.Start();
 
@@ -41,8 +46,8 @@ namespace ModbusNetDemo
             // TcpModbusResponse<List<bool>> response = new TcpModbusResponse<List<bool>>();
 
 
-            ReadCoilsMessage message = new ReadCoilsMessage();
-            var spanss = message.ToBinary();
+            ReadCoilsRequestMessage requestMessage = new ReadCoilsRequestMessage();
+            var spanss = requestMessage.ToBinary();
 
             Console.WriteLine("dd");
         }

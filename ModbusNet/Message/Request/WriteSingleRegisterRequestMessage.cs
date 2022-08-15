@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace ModbusNet.Message.Request
 {
-    public class WriteSingleRegisterMessage : BaseMessage
+    public class WriteSingleRegisterRequestMessage : BaseRequestMessage
     {
         private const int MESSAGE_LENGTH = 12;
 

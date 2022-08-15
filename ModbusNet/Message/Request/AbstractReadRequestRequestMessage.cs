@@ -1,7 +1,7 @@
 ﻿using System;
 namespace ModbusNet.Message
 {
-    public abstract class AbstractReadRequestMessage : BaseMessage
+    public abstract class AbstractReadRequestRequestMessage : BaseRequestMessage
     {
 
         /// <summary>

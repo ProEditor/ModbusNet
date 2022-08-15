@@ -12,13 +12,8 @@ namespace ModbusNet
         /// <summary>
         /// 消息发送队列
         /// </summary>
-        private readonly ConcurrentQueue<BaseMessage> _requestMessageQueue = new ConcurrentQueue<BaseMessage>();
-
-        /// <summary>
-        /// 消息接收队列
-        /// </summary>
-        private readonly ConcurrentQueue<BaseMessage> _receiveMessageQueue = new ConcurrentQueue<BaseMessage>();
-
+        private readonly ConcurrentQueue<BaseRequestMessage> _requestMessageQueue = new ConcurrentQueue<BaseRequestMessage>();
+        
         /// <summary>
         /// 内部套接字连接对象
         /// </summary>
@@ -33,7 +28,8 @@ namespace ModbusNet
 
         private Thread _sendThread;
 
-        private Thread _receiveThread;
+        private TcpModbusReceiveThread _receiveThread;
+
 
         public TcpModbusMaster(string ipAddress, int port)
         {
@@ -77,6 +73,7 @@ namespace ModbusNet
             {
                 return;
             }
+
             _innerSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
             _innerSocket.SendTimeout = 5000;
             _innerSocket.ReceiveTimeout = 5000;
@@ -95,13 +92,14 @@ namespace ModbusNet
             };
             _sendThread.Start();
 
-            _receiveThread = new Thread(ReceiveMessageThreadMethod)
-            {
-                IsBackground = true
-            };
+            _receiveThread = new TcpModbusReceiveThread(_innerSocket);
             _receiveThread.Start();
+
         }
 
+        /// <summary>
+        /// 停止TcpModbus 客户端
+        /// </summary>
         public void Stop()
         {
             if (_isRunning)
@@ -110,157 +108,17 @@ namespace ModbusNet
                 _innerSocket.Close();
                 _innerSocket.Dispose();
 
-                foreach (BaseMessage baseMessage in _requestMessageQueue)
+                foreach (BaseRequestMessage baseMessage in _requestMessageQueue)
                 {
                     baseMessage.Dispose();
                 }
 
-                foreach (BaseMessage baseMessage in _receiveMessageQueue)
-                {
-                    baseMessage.Dispose();
-                }
 
                 _requestMessageQueue.Clear();
-                _receiveMessageQueue.Clear();
 
             }
         }
 
-        private void ReceiveMessageThreadMethod()
-        {
-            while (_isRunning)
-            {
-                if (_innerSocket.Available <= 0)
-                {
-                    Thread.Sleep(1);
-                    continue;
-                }
-
-                if (_receiveMessageQueue.IsEmpty == false)
-                {
-                    _receiveMessageQueue.TryDequeue(out BaseMessage message);
-                    if (message != null)
-                    {
-                        ModbusApplicationProtocolPart mbap = ReceiveApplicationProtocol();
-                        if (mbap == null)
-                        {
-                            Thread.Sleep(1);
-                            continue;
-                        }
-
-                        switch (message.FunctionCode)
-                        {
-                            case FunctionCodeDefinition.READ_COILS:
-
-
-
-
-                                break;
-
-                            case FunctionCodeDefinition.READ_DISCRETE_INPUTS:
-                                break;
-
-                            case FunctionCodeDefinition.READ_HOLDING_REGISTERS:
-                                break;
-
-                            case FunctionCodeDefinition.READ_INPUT_REGISTERS:
-                                break;
-
-                            case FunctionCodeDefinition.WRITE_SINGLE_COIL:
-                                break;
-
-                            case FunctionCodeDefinition.WRITE_SINGLE_REGISTER:
-                                break;
-
-                            case FunctionCodeDefinition.WRITE_MULTIPLE_COILS:
-                                break;
-
-                            case FunctionCodeDefinition.WRITE_MULTIPLE_REGISTERS:
-                                break;
-
-                            case FunctionCodeDefinition.READ_WRITE_MULTIPLE_REGISTERS:
-                                break;
-                            default:
-                                throw new ArgumentException("invalid function code");
-
-                        }
-
-                    }
-                }
-
-                Thread.Sleep(1);
-
-            }
-        }
-
-        /// <summary>
-        /// 从套接字缓冲区中接收MBAP部分的数据
-        /// </summary>
-        /// <returns>返回MBAP数据</returns>
-        private ModbusApplicationProtocolPart ReceiveApplicationProtocol()
-        {
-            //MBAP部分的长度
-            const int modbusAppProtocolLen = 7;
-            //累计接收的长度
-            int fullReceivedSize = 0;
-            //剩余需要接收的长度
-            int remainLen = modbusAppProtocolLen;
-            //开始往Buffer中写入的开始偏移量
-            int startOffset = 0;
-            byte[] buffer = new byte[modbusAppProtocolLen];
-            while (_innerSocket.Available > 0)
-            {
-                //如果连接已经中断直接返回null
-                if (_innerSocket.Connected == false)
-                    return null;
-
-                try
-                {
-                    int receivedSize = _innerSocket.Receive(buffer, startOffset, remainLen, SocketFlags.None);
-                    fullReceivedSize += receivedSize;
-
-                    if (fullReceivedSize == modbusAppProtocolLen)
-                    {
-                        ModbusApplicationProtocolPart mbap = new ModbusApplicationProtocolPart();
-
-                        if (BitConverter.IsLittleEndian)
-                        {
-                            mbap.TransactionId = BitConverter.ToUInt16(new[] { buffer[1], buffer[0] }, 0);
-                        }
-                        else
-                        {
-                            mbap.TransactionId = BitConverter.ToUInt16(buffer, 0);
-                        }
-
-                        mbap.ProtocolId = 0;
-
-                        if (BitConverter.IsLittleEndian)
-                        {
-                            mbap.Length = BitConverter.ToUInt16(new[] { buffer[5], buffer[4] }, 0);
-                        }
-                        else
-                        {
-                            mbap.TransactionId = BitConverter.ToUInt16(buffer, 4);
-                        }
-
-                        mbap.UnitId = buffer[6];
-                        return mbap;
-
-                    }
-
-                    remainLen = modbusAppProtocolLen - fullReceivedSize;
-                    startOffset = fullReceivedSize;
-
-                }
-                catch (SocketException e)
-                {
-                    //套接字超时读取后，会直接抛出异常
-                    Console.WriteLine(e);
-                }
-
-            }
-            return null;
-        }
 
         private void SendMessageThreadMethod()
         {
@@ -268,7 +126,7 @@ namespace ModbusNet
             {
                 if (_requestMessageQueue.IsEmpty == false)
                 {
-                    _requestMessageQueue.TryDequeue(out BaseMessage message);
+                    _requestMessageQueue.TryDequeue(out BaseRequestMessage message);
                     if (message != null)
                     {
                         try
@@ -515,7 +373,7 @@ namespace ModbusNet
         }
 
 
-        private void SendMessage(BaseMessage request)
+        private void SendMessage(BaseRequestMessage request)
         {
             _requestMessageQueue.Enqueue(request);
         }

@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace ModbusNet.Message
 {
-    public abstract class BaseMessage : IDisposable
+    public abstract class BaseRequestMessage : IDisposable
     {
         protected IntPtr NativePtr { get; set; } = IntPtr.Zero;
 
@@ -22,7 +22,7 @@ namespace ModbusNet.Message
         /// <summary>
         /// 功能码
         /// </summary>
-        public abstract byte FunctionCode { get;  }
+        public abstract byte FunctionCode { get; }
 
 
         public abstract Span<byte> ToBinary();
@@ -77,4 +77,3 @@ namespace ModbusNet.Message
         }
     }
 }
-

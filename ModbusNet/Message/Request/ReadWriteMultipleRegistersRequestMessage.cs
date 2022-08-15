@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 
 namespace ModbusNet.Message.Request
 {
-    public class ReadWriteMultipleRegistersMessage : AbstractRegistersRequestMessage
+    public class ReadWriteMultipleRegistersRequestMessage : AbstractRegistersRequestRequestMessage
     {
         public override byte FunctionCode => FunctionCodeDefinition.READ_WRITE_MULTIPLE_REGISTERS;
 

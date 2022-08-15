@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace ModbusNet.Message
 {
-    public class ReadCoilsMessage : AbstractReadRequestMessage
+    public class ReadCoilsRequestMessage : AbstractReadRequestRequestMessage
     {
 
         private const int MessageLength = 12;

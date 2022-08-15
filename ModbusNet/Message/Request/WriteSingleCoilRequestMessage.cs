@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 
 namespace ModbusNet.Message.Request
 {
-    public class WriteSingleCoilMessage : BaseMessage
+    public class WriteSingleCoilRequestMessage : BaseRequestMessage
     {
 
         private const int MESSAGE_LENGTH = 12;
