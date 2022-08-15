@@ -35,4 +35,7 @@
     <Folder Include="Message\" />
     <Folder Include="Message\Request\" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="NLog" Version="5.0.2" />
+  </ItemGroup>
 </Project>

@@ -7,7 +7,7 @@ namespace ModbusNet.Message.Request
     /// 读取离散量输入
     /// 请求格式和读取线圈量是一致的，直接继承读取线圈量即可
     /// </summary>
-    public class ReadDiscreteInputsRequestMessage : ReadCoilsRequestMessage
+    public class ReadDiscreteInputsMessage : ReadCoilsMessage
     {
         private const int MESSAGE_LENGTH = 12;
 

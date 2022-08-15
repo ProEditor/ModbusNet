@@ -6,17 +6,17 @@ namespace ModbusNet.Message
     public class ReadCoilsMessage : AbstractReadRequestMessage
     {
 
-        private const int MESSAGE_LENGTH = 12;
+        private const int MessageLength = 12;
 
         public override byte FunctionCode => FunctionCodeDefinition.READ_COILS;
 
         public override Span<byte> ToBinary()
         {
-            this.NativePtr = Marshal.AllocHGlobal(MESSAGE_LENGTH);
+            this.NativePtr = Marshal.AllocHGlobal(MessageLength);
             Span<byte> nativeSpan = null;
             unsafe
             {
-                nativeSpan = new Span<byte>(this.NativePtr.ToPointer(), MESSAGE_LENGTH);
+                nativeSpan = new Span<byte>(this.NativePtr.ToPointer(), MessageLength);
             }
 
             BuildMBAP(nativeSpan);

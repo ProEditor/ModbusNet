@@ -1,18 +1,15 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Net.Sockets;
-using System.Runtime.InteropServices;
 using System.Threading;
 using ModbusNet.Message;
 using ModbusNet.Message.Request;
 
 namespace ModbusNet
 {
-    public class TcpModbusRequestMessageBuilder
+    public class TcpModbusMessageBuilder
     {
 
-        private static int TransactionSequenceIndex = 0;
+        private static int _transactionSequenceIndex;
 
         /// <summary>
         /// 事务Id
@@ -79,82 +76,82 @@ namespace ModbusNet
 
 
 
-        public TcpModbusRequestMessageBuilder(byte functionCode)
+        public TcpModbusMessageBuilder(byte functionCode)
         {
-            Interlocked.Increment(ref TransactionSequenceIndex);
+            Interlocked.Increment(ref _transactionSequenceIndex);
 
-            TransactionId = (ushort)TransactionSequenceIndex;
+            TransactionId = (ushort)_transactionSequenceIndex;
             FunctionCode = functionCode;
         }
 
 
-        public TcpModbusRequestMessageBuilder(byte functionCode, byte unitId)
+        public TcpModbusMessageBuilder(byte functionCode, byte unitId)
         {
-            Interlocked.Increment(ref TransactionSequenceIndex);
+            Interlocked.Increment(ref _transactionSequenceIndex);
 
             FunctionCode = functionCode;
-            TransactionId = (ushort)TransactionSequenceIndex;
+            TransactionId = (ushort)_transactionSequenceIndex;
             UnitId = unitId;
         }
 
 
-        public TcpModbusRequestMessageBuilder BuildUnitId(byte unitId)
+        public TcpModbusMessageBuilder BuildUnitId(byte unitId)
         {
             UnitId = unitId;
             return this;
         }
 
-        public TcpModbusRequestMessageBuilder BuildWriteData(object data)
+        public TcpModbusMessageBuilder BuildWriteData(object data)
         {
             WriteData = data;
             return this;
         }
 
 
-        public TcpModbusRequestMessageBuilder BuildAddress(ushort address)
+        public TcpModbusMessageBuilder BuildAddress(ushort address)
         {
             Address = address;
             return this;
         }
 
-        public TcpModbusRequestMessageBuilder BuildQuantity(ushort quantity)
+        public TcpModbusMessageBuilder BuildQuantity(ushort quantity)
         {
             Quantity = quantity;
             return this;
         }
 
-        public TcpModbusRequestMessageBuilder BuildNumericalType(NumericalTypeEnum numericalType)
+        public TcpModbusMessageBuilder BuildNumericalType(NumericalTypeEnum numericalType)
         {
             NumericalType = numericalType;
             return this;
         }
 
-        public TcpModbusRequestMessageBuilder BuildReadStartingAddress(ushort readStartAddress)
+        public TcpModbusMessageBuilder BuildReadStartingAddress(ushort readStartAddress)
         {
             ReadStartingAddress = readStartAddress;
             return this;
         }
 
-        public TcpModbusRequestMessageBuilder BuildReadQuantity(ushort readQuantity)
+        public TcpModbusMessageBuilder BuildReadQuantity(ushort readQuantity)
         {
             ReadQuantity = readQuantity;
             return this;
         }
 
-        public TcpModbusRequestMessageBuilder BuildWriteStartingAddress(ushort writeStartingAddress)
+        public TcpModbusMessageBuilder BuildWriteStartingAddress(ushort writeStartingAddress)
         {
             WriteStartingAddress = writeStartingAddress;
             return this;
         }
 
 
-        public TcpModbusRequestMessageBuilder BuildWriteQuantity(ushort writeQuantity)
+        public TcpModbusMessageBuilder BuildWriteQuantity(ushort writeQuantity)
         {
             WriteQuantity = writeQuantity;
             return this;
         }
 
-        public TcpModbusRequestMessageBuilder BuildTransactionId(ushort transactionId)
+        public TcpModbusMessageBuilder BuildTransactionId(ushort transactionId)
         {
             TransactionId = transactionId;
             return this;

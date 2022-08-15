@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using ModbusNet;
 using ModbusNet.Message;
 
@@ -9,11 +10,11 @@ namespace ModbusNetDemo
     {
         static void Main(string[] args)
         {
-            // TcpModbusMaster tcpModbusMaster = new TcpModbusMaster("10.211.55.3", 502);
-            /// tcpModbusMaster.Start();
+            TcpModbusMaster tcpModbusMaster = new TcpModbusMaster("10.211.55.3", 502);
+            tcpModbusMaster.Start();
 
-
-            //     var dd = tcpModbusMaster.ReadCoils(0, 5);//
+            tcpModbusMaster.ReadCoils(0, 5);
+            Console.ReadLine();
 
             //tcpModbusMaster.WriteSingleCoil(0, true);
             //tcpModbusMaster.WriteSingleCoil(1, true);
@@ -42,9 +43,8 @@ namespace ModbusNetDemo
 
             ReadCoilsMessage message = new ReadCoilsMessage();
             var spanss = message.ToBinary();
-            
+
             Console.WriteLine("dd");
         }
     }
 }
-
