@@ -1,4 +1,4 @@
-﻿using System;
+﻿using ModbusNet.Enum;
 namespace ModbusNet
 {
     public class TcpMasterOption
@@ -13,12 +13,6 @@ namespace ModbusNet
         /// Modbus从站的端口
         /// </summary>
         public int Port { get; set; } = 502;
-
-
-        /// <summary>
-        /// 从站Id
-        /// </summary>
-        public int SlaveId { get; set; } = 1;
 
         /// <summary>
         /// 字节序列的标识方式，默认为“大端序”
@@ -51,4 +45,3 @@ namespace ModbusNet
 
     }
 }
-

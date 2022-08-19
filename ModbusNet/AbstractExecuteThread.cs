@@ -87,6 +87,14 @@ namespace ModbusNet
         public void Stop()
         {
             _isRunning = false;
+            _internalSocket.Close();
+            _internalSocket.Dispose();
+
+            foreach (BaseRequestMessage baseMessage in _requestMessageQueue)
+            {
+                baseMessage.Dispose();
+            }
+            _requestMessageQueue.Clear();
         }
 
 

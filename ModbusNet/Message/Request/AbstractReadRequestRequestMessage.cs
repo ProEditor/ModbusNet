@@ -1,5 +1,5 @@
 ﻿using System;
-namespace ModbusNet.Message
+namespace ModbusNet.Message.Request
 {
     public abstract class AbstractReadRequestRequestMessage : BaseRequestMessage
     {
@@ -17,4 +17,3 @@ namespace ModbusNet.Message
 
     }
 }
-

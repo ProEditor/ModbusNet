@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using ModbusNet.Enum;
+using ModbusNet.Extension;
 
 namespace ModbusNet.Message.Request
 {
     public class WriteSingleRegisterRequestMessage : BaseRequestMessage
     {
-        private const int MESSAGE_LENGTH = 12;
+        private const int MessageLength = 12;
 
         public override byte FunctionCode => FunctionCodeDefinition.WRITE_SINGLE_REGISTER;
 
@@ -22,14 +24,14 @@ namespace ModbusNet.Message.Request
         public override Span<byte> ToBinary()
         {
 
-            this.NativePtr = Marshal.AllocHGlobal(MESSAGE_LENGTH);
-            Span<byte> nativeSpan = null;
+            this.NativePtr = Marshal.AllocHGlobal(MessageLength);
+            Span<byte> nativeSpan;
             unsafe
             {
-                nativeSpan = new Span<byte>(this.NativePtr.ToPointer(), MESSAGE_LENGTH);
+                nativeSpan = new Span<byte>(NativePtr.ToPointer(), MessageLength);
             }
 
-            BuildMBAP(nativeSpan);
+            BuildMbap(nativeSpan);
 
             byte[] addressBytes = BitConverter.GetBytes(Address).ToPlatform();
 
@@ -50,4 +52,3 @@ namespace ModbusNet.Message.Request
         }
     }
 }
-

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using ModbusNet.Enum;
+using ModbusNet.Extension;
 
 namespace ModbusNet.Message.Request
 {
@@ -8,7 +10,7 @@ namespace ModbusNet.Message.Request
     {
         public override byte FunctionCode => FunctionCodeDefinition.READ_WRITE_MULTIPLE_REGISTERS;
 
-        private ushort multipleReadWriteRegistersRemainByteNum = 0;
+        private ushort _multipleReadWriteRegistersRemainByteNum;
 
         /// <summary>
         /// 读写多个寄存器时的读取开始地址
@@ -42,22 +44,22 @@ namespace ModbusNet.Message.Request
             ushort shouldSendNums = 7 + 1 + 2 + 2 + 2 + 2 + 1;
 
             //1字节的单元标识符，1字节的功能码，2字节的开始地址，2字节的数量，1字节的地址数量
-            multipleReadWriteRegistersRemainByteNum = 1 + 1 + 2 + 2 + 2 + 2 + 1;
+            _multipleReadWriteRegistersRemainByteNum = 1 + 1 + 2 + 2 + 2 + 2 + 1;
 
             var actualByteNum = GetActualByteCount();
 
             shouldSendNums += actualByteNum;
-            multipleReadWriteRegistersRemainByteNum += actualByteNum;
+            _multipleReadWriteRegistersRemainByteNum += actualByteNum;
 
 
             this.NativePtr = Marshal.AllocHGlobal(shouldSendNums);
-            Span<byte> nativeSpan = null;
+            Span<byte> nativeSpan;
             unsafe
             {
                 nativeSpan = new Span<byte>(this.NativePtr.ToPointer(), shouldSendNums);
             }
 
-            BuildMBAP(nativeSpan);
+            BuildMbap(nativeSpan);
 
             byte[] readStartingAddress = BitConverter.GetBytes(ReadStartingAddress).ToPlatform();
             nativeSpan[8] = readStartingAddress[0];
@@ -147,8 +149,7 @@ namespace ModbusNet.Message.Request
 
         protected override ushort GetRemainByteCount()
         {
-            return multipleReadWriteRegistersRemainByteNum;
+            return _multipleReadWriteRegistersRemainByteNum;
         }
     }
 }
-

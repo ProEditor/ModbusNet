@@ -1,5 +1,5 @@
 ﻿using System;
-namespace ModbusNet
+namespace ModbusNet.Extension
 {
     public static class ByteArrayExtension
     {

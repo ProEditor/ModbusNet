@@ -1,4 +1,4 @@
-namespace ModbusNet
+namespace  ModbusNet.Enum
 {
     /// <summary>
     /// Modbus官方异常码定义

@@ -5,7 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
 using System.Threading;
+using ModbusNet.Enum;
 using ModbusNet.Message;
+using ModbusNet.Message.Request;
 using NLog;
 namespace ModbusNet
 {

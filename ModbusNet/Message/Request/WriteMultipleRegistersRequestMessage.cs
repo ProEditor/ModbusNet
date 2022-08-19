@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using ModbusNet.Enum;
+using ModbusNet.Extension;
 
 namespace ModbusNet.Message.Request
 {
@@ -9,8 +11,7 @@ namespace ModbusNet.Message.Request
 
         public override byte FunctionCode => FunctionCodeDefinition.WRITE_MULTIPLE_REGISTERS;
 
-        private ushort multipleWriteRegistersRemainByteNum;
-
+        private ushort _multipleWriteRegistersRemainByteNum;
 
         public List<object> Values { get; set; }
 
@@ -21,22 +22,22 @@ namespace ModbusNet.Message.Request
             ushort shouldSendNums = 7 + 1 + 2 + 2 + 1;
 
             //1字节的单元标识符，1字节的功能码，2字节的开始地址，2字节的数量，1字节的地址数量
-            multipleWriteRegistersRemainByteNum = 1 + 1 + 2 + 2 + 1;
+            _multipleWriteRegistersRemainByteNum = 1 + 1 + 2 + 2 + 1;
 
             var actualByteNum = GetActualByteCount();
 
             shouldSendNums += actualByteNum;
-            multipleWriteRegistersRemainByteNum += actualByteNum;
+            _multipleWriteRegistersRemainByteNum += actualByteNum;
 
 
             this.NativePtr = Marshal.AllocHGlobal(shouldSendNums);
-            Span<byte> nativeSpan = null;
+            Span<byte> nativeSpan;
             unsafe
             {
                 nativeSpan = new Span<byte>(this.NativePtr.ToPointer(), shouldSendNums);
             }
 
-            BuildMBAP(nativeSpan);
+            BuildMbap(nativeSpan);
 
             byte[] addressBytes = BitConverter.GetBytes(Address).ToPlatform();
             nativeSpan[8] = addressBytes[0];
@@ -112,8 +113,7 @@ namespace ModbusNet.Message.Request
 
         protected override ushort GetRemainByteCount()
         {
-            return multipleWriteRegistersRemainByteNum;
+            return _multipleWriteRegistersRemainByteNum;
         }
     }
 }
-

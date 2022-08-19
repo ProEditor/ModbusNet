@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Net;
 using System.Runtime.InteropServices;
+using ModbusNet.Enum;
+using ModbusNet.Extension;
 
 namespace ModbusNet.Message.Request
 {
@@ -10,9 +11,9 @@ namespace ModbusNet.Message.Request
     {
         public override byte FunctionCode => FunctionCodeDefinition.WRITE_MULTIPLE_COILS;
 
-        private ushort shouldSendNums;
+        private ushort _shouldSendNums;
 
-        private ushort multipleWriteCoilsRemainByteNum;
+        private ushort _multipleWriteCoilsRemainByteNum;
 
 
         public int Quantity { get; set; }
@@ -24,32 +25,32 @@ namespace ModbusNet.Message.Request
         public override Span<byte> ToBinary()
         {
 
-            shouldSendNums = 7 + 1 + 2 + 2 + 1;//1字节的功能码，2字节的开始地址，2字节的数量，1字节的字节数量
-            multipleWriteCoilsRemainByteNum = 1 + 1 + 2 + 2 + 1;//1字节的单元标识符，1字节的功能码，2字节的开始地址，2字节的数量，1字节的地址数量
+            _shouldSendNums = 7 + 1 + 2 + 2 + 1;//1字节的功能码，2字节的开始地址，2字节的数量，1字节的字节数量
+            _multipleWriteCoilsRemainByteNum = 1 + 1 + 2 + 2 + 1;//1字节的单元标识符，1字节的功能码，2字节的开始地址，2字节的数量，1字节的地址数量
             ushort dataByteNum;
 
             if (Quantity % 8 == 0)
             {
                 dataByteNum = (ushort)(Quantity / 8);
-                shouldSendNums +=dataByteNum;
-                multipleWriteCoilsRemainByteNum += dataByteNum;
+                _shouldSendNums += dataByteNum;
+                _multipleWriteCoilsRemainByteNum += dataByteNum;
             }
             else
             {
                 dataByteNum = (ushort)(Quantity / 8 + 1);
-                shouldSendNums += dataByteNum;
-                multipleWriteCoilsRemainByteNum += dataByteNum;
+                _shouldSendNums += dataByteNum;
+                _multipleWriteCoilsRemainByteNum += dataByteNum;
             }
 
 
-            NativePtr = Marshal.AllocHGlobal(shouldSendNums);
-            Span<byte> nativeSpan = null;
+            NativePtr = Marshal.AllocHGlobal(_shouldSendNums);
+            Span<byte> nativeSpan;
             unsafe
             {
-                nativeSpan = new Span<byte>(NativePtr.ToPointer(), shouldSendNums);
+                nativeSpan = new Span<byte>(NativePtr.ToPointer(), _shouldSendNums);
             }
 
-            BuildMBAP(nativeSpan);
+            BuildMbap(nativeSpan);
 
             byte[] addressBytes = BitConverter.GetBytes(Address).ToPlatform();
 
@@ -80,8 +81,7 @@ namespace ModbusNet.Message.Request
 
         protected override ushort GetRemainByteCount()
         {
-            return multipleWriteCoilsRemainByteNum;
+            return _multipleWriteCoilsRemainByteNum;
         }
     }
 }
-

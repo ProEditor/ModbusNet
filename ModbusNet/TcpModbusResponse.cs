@@ -1,4 +1,4 @@
-﻿using System;
+﻿using ModbusNet.Enum;
 namespace ModbusNet
 {
 

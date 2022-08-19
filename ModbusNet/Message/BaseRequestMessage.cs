@@ -1,19 +1,12 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using ModbusNet.Extension;
 
 namespace ModbusNet.Message
 {
-
-    /// <summary>
-    /// 发送请求后的回调函数
-    /// </summary>
-    public delegate void TcpModbusSendCallback(TcpModbusResponse response);
-
-
     public abstract class BaseRequestMessage : IDisposable
     {
         protected IntPtr NativePtr { get; set; } = IntPtr.Zero;
-
 
         /// <summary>
         /// 单元标识符
@@ -35,7 +28,7 @@ namespace ModbusNet.Message
         /// <summary>
         /// 回调函数
         /// </summary>
-        public TcpModbusSendCallback Callback { get; set; }
+        public ModbusSendCallback Callback { get; set; }
 
 
         public abstract Span<byte> ToBinary();
@@ -50,10 +43,8 @@ namespace ModbusNet.Message
         /// <summary>
         /// 构建MBAP部分+功能码
         /// </summary>
-        /// <param name="req">请求参数</param>
-        /// <param name="remainByte">剩余长度</param>
         /// <param name="reqSpan">返回的字节数组</param>
-        protected void BuildMBAP(Span<byte> reqSpan)
+        protected void BuildMbap(Span<byte> reqSpan)
         {
 
             var transactionBytes = BitConverter.GetBytes(TransactionId).ToPlatform();

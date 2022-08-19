@@ -1,4 +1,5 @@
 using System;
+using ModbusNet.Enum;
 namespace ModbusNet.Message.Response
 {
     /// <summary>

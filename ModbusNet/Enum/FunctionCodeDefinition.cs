@@ -1,5 +1,4 @@
-﻿using System;
-namespace ModbusNet
+﻿namespace ModbusNet.Enum
 {
     /// <summary>
     /// Modbus官方定义的功能码
@@ -57,8 +56,7 @@ namespace ModbusNet
         /// <summary>
         /// 读写多个寄存器，将一个读操作和一个写操作合并成一个操作，写操作执行在读操作之后
         /// </summary>
-        public const byte READ_WRITE_MULTIPLE_REGISTERS=0x17;
+        public const byte READ_WRITE_MULTIPLE_REGISTERS = 0x17;
 
     }
 }
-

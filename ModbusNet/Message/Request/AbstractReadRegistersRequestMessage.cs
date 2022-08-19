@@ -1,4 +1,4 @@
-﻿using System;
+﻿using ModbusNet.Enum;
 namespace ModbusNet.Message.Request
 {
     public abstract class AbstractRegistersRequestRequestMessage : AbstractReadRequestRequestMessage
@@ -51,4 +51,3 @@ namespace ModbusNet.Message.Request
         }
     }
 }
-

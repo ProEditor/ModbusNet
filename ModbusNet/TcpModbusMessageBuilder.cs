@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using ModbusNet.Enum;
 using ModbusNet.Message;
 using ModbusNet.Message.Request;
 
@@ -14,15 +15,15 @@ namespace ModbusNet
         /// <summary>
         /// 事务Id
         /// </summary>
-        public ushort TransactionId { get; set; }
+        private ushort TransactionId { get; set; }
 
         /// <summary>
         /// 单元标识符
         /// </summary>
-        private byte UnitId { get; set; } = 0;
+        private byte UnitId { get; set; }
 
 
-        public NumericalTypeEnum NumericalType { get; set; } = NumericalTypeEnum.Short;
+        private NumericalTypeEnum NumericalType { get; set; } = NumericalTypeEnum.Short;
 
 
         /// <summary>
@@ -74,24 +75,30 @@ namespace ModbusNet
         private ushort WriteQuantity { get; set; }
 
 
+        /// <summary>
+        /// 回调函数
+        /// </summary>
+        private ModbusSendCallback Callback { get; }
 
 
-        public TcpModbusMessageBuilder(byte functionCode)
+        public TcpModbusMessageBuilder(byte functionCode, ModbusSendCallback callback)
         {
             Interlocked.Increment(ref _transactionSequenceIndex);
 
             TransactionId = (ushort)_transactionSequenceIndex;
             FunctionCode = functionCode;
+            Callback = callback;
         }
 
 
-        public TcpModbusMessageBuilder(byte functionCode, byte unitId)
+        public TcpModbusMessageBuilder(byte functionCode, byte unitId, ModbusSendCallback callback)
         {
             Interlocked.Increment(ref _transactionSequenceIndex);
 
             FunctionCode = functionCode;
             TransactionId = (ushort)_transactionSequenceIndex;
             UnitId = unitId;
+            Callback = callback;
         }
 
 
@@ -167,6 +174,7 @@ namespace ModbusNet
                     readCoilsRequest.UnitId = UnitId;
                     readCoilsRequest.Address = Address;
                     readCoilsRequest.Quantity = Quantity;
+                    readCoilsRequest.Callback = Callback;
                     return readCoilsRequest;
 
                 case FunctionCodeDefinition.READ_DISCRETE_INPUTS:
@@ -175,6 +183,8 @@ namespace ModbusNet
                     readDiscreteInputsRequest.UnitId = UnitId;
                     readDiscreteInputsRequest.Address = Address;
                     readDiscreteInputsRequest.Quantity = Quantity;
+                    readDiscreteInputsRequest.Callback = Callback;
+
                     return readDiscreteInputsRequest;
 
                 case FunctionCodeDefinition.READ_HOLDING_REGISTERS:
@@ -183,6 +193,9 @@ namespace ModbusNet
                     readHoldingRegistersRequest.UnitId = UnitId;
                     readHoldingRegistersRequest.Address = Address;
                     readHoldingRegistersRequest.Quantity = Quantity;
+                    readHoldingRegistersRequest.NumericalType = NumericalType;
+                    readHoldingRegistersRequest.Callback = Callback;
+
                     return readHoldingRegistersRequest;
 
                 case FunctionCodeDefinition.READ_INPUT_REGISTERS:
@@ -191,6 +204,8 @@ namespace ModbusNet
                     readInputRegistersRequest.UnitId = UnitId;
                     readInputRegistersRequest.Address = Address;
                     readInputRegistersRequest.Quantity = Quantity;
+                    readInputRegistersRequest.NumericalType = NumericalType;
+                    readInputRegistersRequest.Callback = Callback;
                     return readInputRegistersRequest;
 
                 case FunctionCodeDefinition.WRITE_SINGLE_COIL:
@@ -199,6 +214,7 @@ namespace ModbusNet
                     writeSingleCoilRequest.UnitId = UnitId;
                     writeSingleCoilRequest.Address = Address;
                     writeSingleCoilRequest.CoilStatus = (bool)WriteData;
+                    writeSingleCoilRequest.Callback = Callback;
                     return writeSingleCoilRequest;
 
                 case FunctionCodeDefinition.WRITE_SINGLE_REGISTER:
@@ -207,6 +223,7 @@ namespace ModbusNet
                     writeSingleRegisterRequest.UnitId = UnitId;
                     writeSingleRegisterRequest.Address = Address;
                     writeSingleRegisterRequest.Value = (short)WriteData;
+                    writeSingleRegisterRequest.Callback = Callback;
                     return writeSingleRegisterRequest;
 
                 case FunctionCodeDefinition.WRITE_MULTIPLE_COILS:
@@ -215,6 +232,7 @@ namespace ModbusNet
                     writeMultipleCoilsRequest.UnitId = UnitId;
                     writeMultipleCoilsRequest.Address = Address;
                     writeMultipleCoilsRequest.Values = (List<bool>)WriteData;
+                    writeMultipleCoilsRequest.Callback = Callback;
                     return writeMultipleCoilsRequest;
 
                 case FunctionCodeDefinition.WRITE_MULTIPLE_REGISTERS:
@@ -223,6 +241,7 @@ namespace ModbusNet
                     writeMultipleRegistersRequest.UnitId = UnitId;
                     writeMultipleRegistersRequest.Address = Address;
                     writeMultipleRegistersRequest.Values = (List<object>)WriteData;
+                    writeMultipleRegistersRequest.Callback = Callback;
                     return writeMultipleRegistersRequest;
 
                 case FunctionCodeDefinition.READ_WRITE_MULTIPLE_REGISTERS:
@@ -234,6 +253,8 @@ namespace ModbusNet
                     readWriteMultipleRegistersRequest.WriteStartingAddress = WriteStartingAddress;
                     readWriteMultipleRegistersRequest.WriteQuantity = WriteQuantity;
                     readWriteMultipleRegistersRequest.Values = (List<object>)WriteData;
+                    readWriteMultipleRegistersRequest.NumericalType = NumericalType;
+                    readWriteMultipleRegistersRequest.Callback = Callback;
                     return readWriteMultipleRegistersRequest;
                 default:
                     throw new ArgumentException("invalid function code");
@@ -247,4 +268,3 @@ namespace ModbusNet
 
 
 }
-

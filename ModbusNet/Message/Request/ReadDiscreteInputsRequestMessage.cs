@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using ModbusNet.Enum;
+using ModbusNet.Extension;
 
 namespace ModbusNet.Message.Request
 {
@@ -9,20 +11,20 @@ namespace ModbusNet.Message.Request
     /// </summary>
     public class ReadDiscreteInputsRequestMessage : ReadCoilsRequestMessage
     {
-        private const int MESSAGE_LENGTH = 12;
+        private const int MessageLength = 12;
 
         public override byte FunctionCode => FunctionCodeDefinition.READ_DISCRETE_INPUTS;
 
         public override Span<byte> ToBinary()
         {
-            this.NativePtr = Marshal.AllocHGlobal(MESSAGE_LENGTH);
-            Span<byte> nativeSpan = null;
+            this.NativePtr = Marshal.AllocHGlobal(MessageLength);
+            Span<byte> nativeSpan;
             unsafe
             {
-                nativeSpan = new Span<byte>(this.NativePtr.ToPointer(), MESSAGE_LENGTH);
+                nativeSpan = new Span<byte>(this.NativePtr.ToPointer(), MessageLength);
             }
 
-            BuildMBAP(nativeSpan);
+            BuildMbap(nativeSpan);
 
             byte[] addressBytes = BitConverter.GetBytes(Address).ToPlatform();
             nativeSpan[8] = addressBytes[0];
@@ -37,10 +39,9 @@ namespace ModbusNet.Message.Request
 
         protected override ushort GetRemainByteCount()
         {
-            return (ushort)6;
+            return 6;
         }
     }
 
 
 }
-

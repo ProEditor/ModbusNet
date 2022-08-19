@@ -1,4 +1,4 @@
-﻿namespace ModbusNet
+﻿namespace ModbusNet.Enum
 {
     public enum EncodingModeEnum
     {

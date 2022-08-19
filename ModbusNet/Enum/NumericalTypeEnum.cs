@@ -1,5 +1,4 @@
-﻿using System;
-namespace ModbusNet
+﻿namespace ModbusNet.Enum
 {
     public enum NumericalTypeEnum
     {
@@ -9,4 +8,3 @@ namespace ModbusNet
         Double
     }
 }
-

@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Net.Sockets;
-using System.Threading;
+using ModbusNet.Enum;
 using ModbusNet.Message;
 
 namespace ModbusNet
@@ -83,32 +82,10 @@ namespace ModbusNet
 
         }
 
-        /// <summary>
-        /// 停止TcpModbus 客户端
-        /// </summary>
-        public void Stop()
+
+        public void ReadCoils(ushort start, ushort quantity, ModbusSendCallback callback)
         {
-            if (_isRunning)
-            {
-                _isRunning = false;
-                _innerSocket.Close();
-                _innerSocket.Dispose();
-
-                // foreach (BaseRequestMessage baseMessage in _requestMessageQueue)
-                // {
-                //     baseMessage.Dispose();
-                // }
-                //
-                //
-                // _requestMessageQueue.Clear();
-
-            }
-        }
-
-
-        public void ReadCoils(ushort start, ushort quantity)
-        {
-            TcpModbusMessageBuilder builder = new TcpModbusMessageBuilder(FunctionCodeDefinition.READ_COILS);
+            TcpModbusMessageBuilder builder = new TcpModbusMessageBuilder(FunctionCodeDefinition.READ_COILS, callback);
             builder.BuildAddress(start).BuildQuantity(quantity);
             var request = builder.Build();
             SendMessage(request);
@@ -117,168 +94,169 @@ namespace ModbusNet
 
 
 
-        public void WriteSingleCoil(ushort start, bool status)
+        public void WriteSingleCoil(ushort start, bool status, ModbusSendCallback callback)
         {
-            TcpModbusMessageBuilder builder = new TcpModbusMessageBuilder(FunctionCodeDefinition.WRITE_SINGLE_COIL);
+            TcpModbusMessageBuilder builder = new TcpModbusMessageBuilder(FunctionCodeDefinition.WRITE_SINGLE_COIL, callback);
             builder.BuildAddress(start).BuildWriteData(status);
             var request = builder.Build();
             SendMessage(request);
         }
 
-        public void ReadDiscreteInputs(ushort start, ushort quantity)
+        public void ReadDiscreteInputs(ushort start, ushort quantity, ModbusSendCallback callback)
         {
-            TcpModbusMessageBuilder builder = new TcpModbusMessageBuilder(FunctionCodeDefinition.READ_DISCRETE_INPUTS);
+            TcpModbusMessageBuilder builder = new TcpModbusMessageBuilder(FunctionCodeDefinition.READ_DISCRETE_INPUTS, callback);
             builder.BuildAddress(start).BuildQuantity(quantity);
             var request = builder.Build();
             SendMessage(request);
         }
 
-        public void ReadInt16HoldingRegisters(ushort start, ushort quantity)
+        public void ReadInt16HoldingRegisters(ushort start, ushort quantity, ModbusSendCallback callback)
         {
-            TcpModbusMessageBuilder builder = new TcpModbusMessageBuilder(FunctionCodeDefinition.READ_HOLDING_REGISTERS);
+            TcpModbusMessageBuilder builder = new TcpModbusMessageBuilder(FunctionCodeDefinition.READ_HOLDING_REGISTERS, callback);
             builder.BuildAddress(start).BuildQuantity(quantity).BuildNumericalType(NumericalTypeEnum.Short);
             var request = builder.Build();
             SendMessage(request);
         }
 
-        public void ReadInt32HoldingRegisters(ushort start, ushort quantity)
+        public void ReadInt32HoldingRegisters(ushort start, ushort quantity, ModbusSendCallback callback)
         {
-            TcpModbusMessageBuilder builder = new TcpModbusMessageBuilder(FunctionCodeDefinition.READ_HOLDING_REGISTERS);
+            TcpModbusMessageBuilder builder = new TcpModbusMessageBuilder(FunctionCodeDefinition.READ_HOLDING_REGISTERS, callback);
             builder.BuildAddress(start).BuildQuantity(quantity).BuildNumericalType(NumericalTypeEnum.Integer);
             var request = builder.Build();
             SendMessage(request);
         }
 
-        public void ReadFloatHoldingRegisters(ushort start, ushort quantity)
+        public void ReadFloatHoldingRegisters(ushort start, ushort quantity, ModbusSendCallback callback)
         {
-            TcpModbusMessageBuilder builder = new TcpModbusMessageBuilder(FunctionCodeDefinition.READ_HOLDING_REGISTERS);
+            TcpModbusMessageBuilder builder = new TcpModbusMessageBuilder(FunctionCodeDefinition.READ_HOLDING_REGISTERS, callback);
             builder.BuildAddress(start).BuildQuantity(quantity).BuildNumericalType(NumericalTypeEnum.Float);
             var request = builder.Build();
             SendMessage(request);
         }
 
 
-        public void ReadDoubleHoldingRegisters(ushort start, ushort quantity)
+        public void ReadDoubleHoldingRegisters(ushort start, ushort quantity, ModbusSendCallback callback)
         {
-            TcpModbusMessageBuilder builder = new TcpModbusMessageBuilder(FunctionCodeDefinition.READ_HOLDING_REGISTERS);
+            TcpModbusMessageBuilder builder = new TcpModbusMessageBuilder(FunctionCodeDefinition.READ_HOLDING_REGISTERS, callback);
             builder.BuildAddress(start).BuildQuantity(quantity).BuildNumericalType(NumericalTypeEnum.Double);
             var request = builder.Build();
             SendMessage(request);
         }
 
-        public void ReadInputRegisters(ushort start, ushort quantity)
+        public void ReadInputRegisters(ushort start, ushort quantity, ModbusSendCallback callback)
         {
-            TcpModbusMessageBuilder builder = new TcpModbusMessageBuilder(FunctionCodeDefinition.READ_INPUT_REGISTERS);
+            TcpModbusMessageBuilder builder = new TcpModbusMessageBuilder(FunctionCodeDefinition.READ_INPUT_REGISTERS, callback);
             builder.BuildAddress(start).BuildQuantity(quantity).BuildNumericalType(NumericalTypeEnum.Short);
             var request = builder.Build();
             SendMessage(request);
         }
 
-        public void ReadIntInputRegisters(ushort start, ushort quantity)
+        public void ReadIntInputRegisters(ushort start, ushort quantity, ModbusSendCallback callback)
         {
-            TcpModbusMessageBuilder builder = new TcpModbusMessageBuilder(FunctionCodeDefinition.READ_INPUT_REGISTERS);
+            TcpModbusMessageBuilder builder = new TcpModbusMessageBuilder(FunctionCodeDefinition.READ_INPUT_REGISTERS, callback);
             builder.BuildAddress(start).BuildQuantity(quantity).BuildNumericalType(NumericalTypeEnum.Integer);
             var request = builder.Build();
             SendMessage(request);
         }
 
-        public void ReadFloatInputRegisters(ushort start, ushort quantity)
+        public void ReadFloatInputRegisters(ushort start, ushort quantity, ModbusSendCallback callback)
         {
-            TcpModbusMessageBuilder builder = new TcpModbusMessageBuilder(FunctionCodeDefinition.READ_INPUT_REGISTERS);
+            TcpModbusMessageBuilder builder = new TcpModbusMessageBuilder(FunctionCodeDefinition.READ_INPUT_REGISTERS, callback);
             builder.BuildAddress(start).BuildQuantity(quantity).BuildNumericalType(NumericalTypeEnum.Float);
             var request = builder.Build();
             SendMessage(request);
         }
 
-        public void ReadDoubleInputRegisters(ushort start, ushort quantity)
+        public void ReadDoubleInputRegisters(ushort start, ushort quantity, ModbusSendCallback callback)
         {
-            TcpModbusMessageBuilder builder = new TcpModbusMessageBuilder(FunctionCodeDefinition.READ_INPUT_REGISTERS);
+            TcpModbusMessageBuilder builder = new TcpModbusMessageBuilder(FunctionCodeDefinition.READ_INPUT_REGISTERS, callback);
             builder.BuildAddress(start).BuildQuantity(quantity).BuildNumericalType(NumericalTypeEnum.Double);
             var request = builder.Build();
             SendMessage(request);
         }
 
-        public void WriteSingleRegister(ushort start, short value)
+        public void WriteSingleRegister(ushort start, short value, ModbusSendCallback callback)
         {
-            TcpModbusMessageBuilder builder = new TcpModbusMessageBuilder(FunctionCodeDefinition.WRITE_SINGLE_REGISTER);
+            TcpModbusMessageBuilder builder = new TcpModbusMessageBuilder(FunctionCodeDefinition.WRITE_SINGLE_REGISTER, callback);
             builder.BuildAddress(start).BuildWriteData(value);
             var request = builder.Build();
             SendMessage(request);
         }
 
-        public void WriteIntSingleRegister(ushort start, int value)
+        public void WriteIntSingleRegister(ushort start, int value, ModbusSendCallback callback)
         {
-            TcpModbusMessageBuilder builder = new TcpModbusMessageBuilder(FunctionCodeDefinition.WRITE_MULTIPLE_REGISTERS);
+            TcpModbusMessageBuilder builder = new TcpModbusMessageBuilder(FunctionCodeDefinition.WRITE_MULTIPLE_REGISTERS, callback);
             builder.BuildAddress(start).BuildWriteData(new List<int>() { value }).BuildNumericalType(NumericalTypeEnum.Integer);
             var request = builder.Build();
             SendMessage(request);
         }
 
 
-        public void WriteFloatSingleRegister(ushort start, float value)
+        public void WriteFloatSingleRegister(ushort start, float value, ModbusSendCallback callback)
         {
-            TcpModbusMessageBuilder builder = new TcpModbusMessageBuilder(FunctionCodeDefinition.WRITE_MULTIPLE_REGISTERS);
+            TcpModbusMessageBuilder builder = new TcpModbusMessageBuilder(FunctionCodeDefinition.WRITE_MULTIPLE_REGISTERS, callback);
             builder.BuildAddress(start).BuildWriteData(new List<float>() { value }).BuildNumericalType(NumericalTypeEnum.Float);
             var request = builder.Build();
             SendMessage(request);
         }
 
-        public void WriteDoubleSingleRegister(ushort start, double value)
+        public void WriteDoubleSingleRegister(ushort start, double value, ModbusSendCallback callback)
         {
-            TcpModbusMessageBuilder builder = new TcpModbusMessageBuilder(FunctionCodeDefinition.WRITE_MULTIPLE_REGISTERS);
+            TcpModbusMessageBuilder builder = new TcpModbusMessageBuilder(FunctionCodeDefinition.WRITE_MULTIPLE_REGISTERS, callback);
             builder.BuildAddress(start).BuildWriteData(new List<double>() { value }).BuildNumericalType(NumericalTypeEnum.Double);
             var request = builder.Build();
             SendMessage(request);
         }
 
 
-        public void WriteMultipleCoils(ushort start, List<bool> values)
+        public void WriteMultipleCoils(ushort start, List<bool> values, ModbusSendCallback callback)
         {
-            TcpModbusMessageBuilder builder = new TcpModbusMessageBuilder(FunctionCodeDefinition.WRITE_MULTIPLE_COILS);
+            TcpModbusMessageBuilder builder = new TcpModbusMessageBuilder(FunctionCodeDefinition.WRITE_MULTIPLE_COILS, callback);
             builder.BuildAddress(start).BuildWriteData(values).BuildQuantity((ushort)values.Count);
             var request = builder.Build();
             SendMessage(request);
         }
 
 
-        public void WriteMultipleRegisters(ushort start, List<short> values)
+        public void WriteMultipleRegisters(ushort start, List<short> values, ModbusSendCallback callback)
         {
-            TcpModbusMessageBuilder builder = new TcpModbusMessageBuilder(FunctionCodeDefinition.WRITE_MULTIPLE_REGISTERS);
+            TcpModbusMessageBuilder builder = new TcpModbusMessageBuilder(FunctionCodeDefinition.WRITE_MULTIPLE_REGISTERS, callback);
             builder.BuildAddress(start).BuildWriteData(values).BuildQuantity((ushort)values.Count);
             var request = builder.Build();
             SendMessage(request);
         }
 
 
-        public void WriteIntMultipleRegisters(ushort start, List<int> values)
+        public void WriteIntMultipleRegisters(ushort start, List<int> values, ModbusSendCallback callback)
         {
-            TcpModbusMessageBuilder builder = new TcpModbusMessageBuilder(FunctionCodeDefinition.WRITE_MULTIPLE_REGISTERS);
+            TcpModbusMessageBuilder builder = new TcpModbusMessageBuilder(FunctionCodeDefinition.WRITE_MULTIPLE_REGISTERS, callback);
             builder.BuildAddress(start).BuildWriteData(values).BuildQuantity((ushort)values.Count).BuildNumericalType(NumericalTypeEnum.Integer);
             var request = builder.Build();
             SendMessage(request);
         }
 
 
-        public void WriteFloatMultipleRegisters(ushort start, List<float> values)
+        public void WriteFloatMultipleRegisters(ushort start, List<float> values, ModbusSendCallback callback)
         {
-            TcpModbusMessageBuilder builder = new TcpModbusMessageBuilder(FunctionCodeDefinition.WRITE_MULTIPLE_REGISTERS);
+            TcpModbusMessageBuilder builder = new TcpModbusMessageBuilder(FunctionCodeDefinition.WRITE_MULTIPLE_REGISTERS, callback);
             builder.BuildAddress(start).BuildWriteData(values).BuildQuantity((ushort)values.Count).BuildNumericalType(NumericalTypeEnum.Float);
             var request = builder.Build();
             SendMessage(request);
         }
 
 
-        public void WriteDoubleMultipleRegisters(ushort start, List<double> values)
+        public void WriteDoubleMultipleRegisters(ushort start, List<double> values, ModbusSendCallback callback)
         {
-            TcpModbusMessageBuilder builder = new TcpModbusMessageBuilder(FunctionCodeDefinition.WRITE_MULTIPLE_REGISTERS);
+            TcpModbusMessageBuilder builder = new TcpModbusMessageBuilder(FunctionCodeDefinition.WRITE_MULTIPLE_REGISTERS, callback);
             builder.BuildAddress(start).BuildWriteData(values).BuildQuantity((ushort)values.Count).BuildNumericalType(NumericalTypeEnum.Double);
             var request = builder.Build();
             SendMessage(request);
         }
 
-        public void ReadWriteMultipleRegisters(ushort readStartAddress, ushort readQuantity, ushort writeStartAddress, List<short> values)
+        public void ReadWriteMultipleRegisters(ushort readStartAddress, ushort readQuantity, ushort writeStartAddress, List<short> values,
+            ModbusSendCallback callback)
         {
-            TcpModbusMessageBuilder builder = new TcpModbusMessageBuilder(FunctionCodeDefinition.READ_WRITE_MULTIPLE_REGISTERS);
+            TcpModbusMessageBuilder builder = new TcpModbusMessageBuilder(FunctionCodeDefinition.READ_WRITE_MULTIPLE_REGISTERS, callback);
             builder
                 .BuildReadStartingAddress(readStartAddress)
                 .BuildReadQuantity(readQuantity)
@@ -290,9 +268,10 @@ namespace ModbusNet
             SendMessage(request);
         }
 
-        public void ReadWriteIntMultipleRegisters(ushort readStartAddress, ushort readQuantity, ushort writeStartAddress, List<int> values)
+        public void ReadWriteIntMultipleRegisters(ushort readStartAddress, ushort readQuantity, ushort writeStartAddress, List<int> values,
+            ModbusSendCallback callback)
         {
-            TcpModbusMessageBuilder builder = new TcpModbusMessageBuilder(FunctionCodeDefinition.READ_WRITE_MULTIPLE_REGISTERS);
+            TcpModbusMessageBuilder builder = new TcpModbusMessageBuilder(FunctionCodeDefinition.READ_WRITE_MULTIPLE_REGISTERS, callback);
             builder
                 .BuildReadStartingAddress(readStartAddress)
                 .BuildReadQuantity(readQuantity)
@@ -304,9 +283,10 @@ namespace ModbusNet
             SendMessage(request);
         }
 
-        public void ReadWriteFloatMultipleRegisters(ushort readStartAddress, ushort readQuantity, ushort writeStartAddress, List<float> values)
+        public void ReadWriteFloatMultipleRegisters(ushort readStartAddress, ushort readQuantity, ushort writeStartAddress, List<float> values,
+            ModbusSendCallback callback)
         {
-            TcpModbusMessageBuilder builder = new TcpModbusMessageBuilder(FunctionCodeDefinition.READ_WRITE_MULTIPLE_REGISTERS);
+            TcpModbusMessageBuilder builder = new TcpModbusMessageBuilder(FunctionCodeDefinition.READ_WRITE_MULTIPLE_REGISTERS, callback);
             builder
                 .BuildReadStartingAddress(readStartAddress)
                 .BuildReadQuantity(readQuantity)
@@ -318,9 +298,10 @@ namespace ModbusNet
             SendMessage(request);
         }
 
-        public void ReadWriteDoubleMultipleRegisters(ushort readStartAddress, ushort readQuantity, ushort writeStartAddress, List<double> values)
+        public void ReadWriteDoubleMultipleRegisters(ushort readStartAddress, ushort readQuantity, ushort writeStartAddress, List<double> values,
+            ModbusSendCallback callback)
         {
-            TcpModbusMessageBuilder builder = new TcpModbusMessageBuilder(FunctionCodeDefinition.READ_WRITE_MULTIPLE_REGISTERS);
+            TcpModbusMessageBuilder builder = new TcpModbusMessageBuilder(FunctionCodeDefinition.READ_WRITE_MULTIPLE_REGISTERS, callback);
             builder
                 .BuildReadStartingAddress(readStartAddress)
                 .BuildReadQuantity(readQuantity)

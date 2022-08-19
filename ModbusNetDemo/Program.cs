@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using ModbusNet;
-using ModbusNet.Message;
 
 namespace ModbusNetDemo
 {
-    class Program
+    static class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
 
             string s = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
@@ -18,7 +15,7 @@ namespace ModbusNetDemo
             TcpModbusMaster tcpModbusMaster = new TcpModbusMaster("10.211.55.3", 502);
             tcpModbusMaster.Start();
 
-            tcpModbusMaster.ReadCoils(0, 15);
+            tcpModbusMaster.ReadCoils(0, 15, (resp) => { Console.WriteLine(resp.Result); });
             Console.ReadLine();
 
             //tcpModbusMaster.WriteSingleCoil(0, true);
@@ -45,9 +42,6 @@ namespace ModbusNetDemo
 
             // TcpModbusResponse<List<bool>> response = new TcpModbusResponse<List<bool>>();
 
-
-            ReadCoilsRequestMessage requestMessage = new ReadCoilsRequestMessage();
-            var spanss = requestMessage.ToBinary();
 
             Console.WriteLine("dd");
         }
