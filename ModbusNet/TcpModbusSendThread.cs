@@ -16,7 +16,6 @@ namespace ModbusNet
 
         protected override void Execute()
         {
-
             var messageQueue = GetMessageQueue();
             if (messageQueue.IsEmpty == false)
             {

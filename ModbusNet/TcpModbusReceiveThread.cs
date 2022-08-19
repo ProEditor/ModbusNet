@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
@@ -15,11 +14,6 @@ namespace ModbusNet
     {
 
         private readonly static Logger Logger = LogManager.GetCurrentClassLogger();
-
-        /// <summary>
-        /// 消息接收队列
-        /// </summary>
-        private readonly ConcurrentBag<BaseRequestMessage> _receiveMessageCollection = new ConcurrentBag<BaseRequestMessage>();
 
         public TcpModbusReceiveThread(TcpMasterOption option, Socket internalSocket) : base("TcpModbusReceiveThread", option, internalSocket)
         {
@@ -38,7 +32,7 @@ namespace ModbusNet
             }
 
             //接收队列中是否存在需要处理的元素，没有则直接返回
-            if (_receiveMessageCollection.IsEmpty)
+            if (GetMessageQueue().IsEmpty)
             {
                 Thread.Sleep(DefaultSleepMilliseconds);
                 return;
@@ -62,7 +56,7 @@ namespace ModbusNet
                 return;
             }
 
-            BaseRequestMessage message = _receiveMessageCollection.FirstOrDefault(c => c.TransactionId == mbap.TransactionId);
+            BaseRequestMessage message = GetMessageQueue().FirstOrDefault(c => c.TransactionId == mbap.TransactionId);
             if (message == null)
             {
                 Logger.Error($"接收队列中没有找到事务Id对应的消息体；事务Id：{mbap.TransactionId}");
@@ -120,10 +114,6 @@ namespace ModbusNet
                     throw new ArgumentException("invalid function code");
 
             }
-
-
-            Thread.Sleep(DefaultSleepMilliseconds);
-
 
         }
 

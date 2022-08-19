@@ -165,7 +165,7 @@ namespace ModbusNet
         /// 获取请求队列
         /// </summary>
         /// <returns>返回当前请求队列</returns>
-        public ConcurrentQueue<BaseRequestMessage> GetMessageQueue()
+        protected ConcurrentQueue<BaseRequestMessage> GetMessageQueue()
         {
             return _requestMessageQueue;
         }

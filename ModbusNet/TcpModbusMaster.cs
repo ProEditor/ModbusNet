@@ -71,6 +71,8 @@ namespace ModbusNet
             _innerSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
             _innerSocket.SendTimeout = 5000;
             _innerSocket.ReceiveTimeout = 5000;
+            _innerSocket.Connect(_option.IPAddress, _option.Port);
+
 
             _isRunning = true;
 
@@ -89,7 +91,6 @@ namespace ModbusNet
             builder.BuildAddress(start).BuildQuantity(quantity);
             var request = builder.Build();
             SendMessage(request);
-
         }
 
 
@@ -317,6 +318,7 @@ namespace ModbusNet
         private void SendMessage(BaseRequestMessage message)
         {
             _sendThread.Add(message);
+            _receiveThread.Add(message);
         }
 
 
