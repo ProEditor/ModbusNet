@@ -1,26 +1,11 @@
 using System;
 namespace ModbusNet.Message.Response
 {
-    public class ExceptionResponse : BaseResponseMessage
+    /// <summary>
+    /// 异常响应帮助类，用于获取详细的请求错误信息
+    /// </summary>
+    public class ExceptionResponseHelper
     {
-
-        public ExceptionResponse(ExceptionCodeDefinition exceptionCode)
-        {
-            ExceptionCode = exceptionCode;
-        }
-
-
-        /// <summary>
-        /// 错误码
-        /// </summary>
-        public ExceptionCodeDefinition ExceptionCode { get; }
-
-        /// <summary>
-        /// 错误码的中文说明
-        /// </summary>
-        public string Remark => GetExceptionCodeRemark(ExceptionCode);
-
-
         public static string GetExceptionCodeRemark(ExceptionCodeDefinition exceptionCode)
         {
             switch (exceptionCode)
@@ -58,14 +43,6 @@ namespace ModbusNet.Message.Response
                     return "网关目标设备响应失败。与网关一起使用，指示没有从目标设备中获得响应。通常意味着设备未在网络中。";
             }
             return String.Empty;
-
-
-        }
-
-
-        public override string ToString()
-        {
-            return $"ExceptionCode:{ExceptionCode},ExceptionCodeStr:{ExceptionCode.ToString()},Remark:{Remark}";
         }
     }
 }

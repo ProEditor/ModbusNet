@@ -10,11 +10,6 @@ namespace ModbusNet
     public class TcpModbusMaster : IModbusMaster
     {
         /// <summary>
-        /// 消息发送队列
-        /// </summary>
-        private readonly ConcurrentQueue<BaseRequestMessage> _requestMessageQueue = new ConcurrentQueue<BaseRequestMessage>();
-        
-        /// <summary>
         /// 内部套接字连接对象
         /// </summary>
         private Socket _innerSocket;
@@ -26,7 +21,7 @@ namespace ModbusNet
 
         private volatile bool _isRunning;
 
-        private Thread _sendThread;
+        private TcpModbusSendThread _sendThread;
 
         private TcpModbusReceiveThread _receiveThread;
 
@@ -78,21 +73,12 @@ namespace ModbusNet
             _innerSocket.SendTimeout = 5000;
             _innerSocket.ReceiveTimeout = 5000;
 
-            _innerSocket.Connect(_option.IPAddress, _option.Port);
-            if (_innerSocket.Connected)
-            {
-                Console.WriteLine("连接Modbus成功");
-            }
-
             _isRunning = true;
 
-            _sendThread = new Thread(SendMessageThreadMethod)
-            {
-                IsBackground = true
-            };
+            _sendThread = new TcpModbusSendThread(_option, _innerSocket);
             _sendThread.Start();
 
-            _receiveThread = new TcpModbusReceiveThread(_innerSocket);
+            _receiveThread = new TcpModbusReceiveThread(_option, _innerSocket);
             _receiveThread.Start();
 
         }
@@ -108,43 +94,17 @@ namespace ModbusNet
                 _innerSocket.Close();
                 _innerSocket.Dispose();
 
-                foreach (BaseRequestMessage baseMessage in _requestMessageQueue)
-                {
-                    baseMessage.Dispose();
-                }
-
-
-                _requestMessageQueue.Clear();
+                // foreach (BaseRequestMessage baseMessage in _requestMessageQueue)
+                // {
+                //     baseMessage.Dispose();
+                // }
+                //
+                //
+                // _requestMessageQueue.Clear();
 
             }
         }
 
-
-        private void SendMessageThreadMethod()
-        {
-            while (_isRunning)
-            {
-                if (_requestMessageQueue.IsEmpty == false)
-                {
-                    _requestMessageQueue.TryDequeue(out BaseRequestMessage message);
-                    if (message != null)
-                    {
-                        try
-                        {
-                            _innerSocket.Send(message.ToBinary());
-                        }
-                        catch (Exception ex)
-                        {
-                            message.Dispose();
-                            //TODO 需要记录日志
-                            Console.WriteLine(ex);
-                        }
-                    }
-                }
-                Thread.Sleep(1);
-            }
-
-        }
 
         public void ReadCoils(ushort start, ushort quantity)
         {
@@ -373,9 +333,9 @@ namespace ModbusNet
         }
 
 
-        private void SendMessage(BaseRequestMessage request)
+        private void SendMessage(BaseRequestMessage message)
         {
-            _requestMessageQueue.Enqueue(request);
+            _sendThread.Add(message);
         }
 
 

@@ -3,6 +3,13 @@ using System.Runtime.InteropServices;
 
 namespace ModbusNet.Message
 {
+
+    /// <summary>
+    /// 发送请求后的回调函数
+    /// </summary>
+    public delegate void TcpModbusSendCallback(TcpModbusResponse response);
+
+
     public abstract class BaseRequestMessage : IDisposable
     {
         protected IntPtr NativePtr { get; set; } = IntPtr.Zero;
@@ -11,7 +18,7 @@ namespace ModbusNet.Message
         /// <summary>
         /// 单元标识符
         /// </summary>
-        public byte UnitId { get; set; } = 0;
+        public byte UnitId { get; set; }
 
 
         /// <summary>
@@ -23,6 +30,12 @@ namespace ModbusNet.Message
         /// 功能码
         /// </summary>
         public abstract byte FunctionCode { get; }
+
+
+        /// <summary>
+        /// 回调函数
+        /// </summary>
+        public TcpModbusSendCallback Callback { get; set; }
 
 
         public abstract Span<byte> ToBinary();

@@ -11,14 +11,14 @@ namespace ModbusNetDemo
         static void Main(string[] args)
         {
 
-            string s = ExceptionCodeDefinition.Acknowledge.ToString();
-            ExceptionCodeDefinition ddd = (ExceptionCodeDefinition)0x99;
-            string s1 = ddd.ToString();
+            string s = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            Console.WriteLine(s);
+
 
             TcpModbusMaster tcpModbusMaster = new TcpModbusMaster("10.211.55.3", 502);
             tcpModbusMaster.Start();
 
-            tcpModbusMaster.ReadCoils(0, 5);
+            tcpModbusMaster.ReadCoils(0, 15);
             Console.ReadLine();
 
             //tcpModbusMaster.WriteSingleCoil(0, true);
