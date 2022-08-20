@@ -1,7 +1,7 @@
 ﻿using ModbusNet.Enum;
 namespace ModbusNet.Message.Request
 {
-    public abstract class AbstractRegistersRequestRequestMessage : AbstractReadRequestRequestMessage
+    public abstract class AbstractRegistersRequestRequestMessage: AbstractReadRequestRequestMessage
     {
 
         public NumericalTypeEnum NumericalType { get; set; }

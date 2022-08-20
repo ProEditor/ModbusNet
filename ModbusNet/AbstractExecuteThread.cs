@@ -175,10 +175,6 @@ namespace ModbusNet
             _requestMessageQueue.Enqueue(message);
         }
 
-        public void Remove()
-        {
-
-        }
 
     }
 }

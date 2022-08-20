@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using ModbusNet.Enum;
 using ModbusNet.Extension;
@@ -14,11 +15,11 @@ namespace ModbusNet.Message.Request
 
         public override Span<byte> ToBinary()
         {
-            this.NativePtr = Marshal.AllocHGlobal(MessageLength);
+            NativePtr = Marshal.AllocHGlobal(MessageLength);
             Span<byte> nativeSpan;
             unsafe
             {
-                nativeSpan = new Span<byte>(this.NativePtr.ToPointer(), MessageLength);
+                nativeSpan = new Span<byte>(NativePtr.ToPointer(), MessageLength);
             }
 
             BuildMbap(nativeSpan);

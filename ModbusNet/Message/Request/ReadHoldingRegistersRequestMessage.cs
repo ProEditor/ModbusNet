@@ -14,10 +14,10 @@ namespace ModbusNet.Message.Request
         public override Span<byte> ToBinary()
         {
             this.NativePtr = Marshal.AllocHGlobal(MessageLength);
-            Span<byte> nativeSpan = null;
+            Span<byte> nativeSpan;
             unsafe
             {
-                nativeSpan = new Span<byte>(this.NativePtr.ToPointer(), MessageLength);
+                nativeSpan = new Span<byte>(NativePtr.ToPointer(), MessageLength);
             }
 
             BuildMbap(nativeSpan);
